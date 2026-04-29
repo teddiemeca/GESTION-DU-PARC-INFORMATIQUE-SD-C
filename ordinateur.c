@@ -58,9 +58,9 @@ void afficherMenu(void)
 // FONCTIONS D'ALLOCATION MEMOIRE
 // ============================================================
 
-Ordinateur* creerOrdinateur(void) {
+P_ordinateur creerOrdinateur(void) {
 // malloc alloue la memoire pour UNE structure Ordinateur
-Ordinateur* nouvelOrdi = (Ordinateur*)malloc(sizeof(Ordinateur));
+P_ordinateur nouvelOrdi = (P_ordinateur)malloc(sizeof(P_ordinateur));
 if (nouvelOrdi == NULL) {
 printf("Erreur !! : Allocation memoire impossible !\n");
 return NULL;
@@ -80,355 +80,360 @@ return nouvelOrdi;
 }
 
 // Fonctiion libererOrdinateur
-void libererOrdinateur(Ordinateur** ordi)
+void libererOrdinateur(P_ordinateur* ordi)
 {
-if (ordi != NULL && *ordi != NULL) {
-free(*ordi); // Libere la memoire allouee
-*ordi = NULL; // Evite le dangling pointer
-}
+    if (ordi != NULL && *ordi != NULL)
+    {
+        free(*ordi); // Libere la memoire allouee
+        *ordi = NULL; // Evite le dangling pointer
+    }
 }
 
 //Liberer Parc
-void libererParc(Ordinateur** parc, int* nbOrdi)
+void libererParc(P_ordinateur* parc, int* nbOrdi)
 {
-if (parc == NULL) {
-    printf("Parc deja vide , rien a liberer.\n");
-    return;
-}
-for (int i = 0; i < *nbOrdi; i++) {
-libererOrdinateur(&parc[i]);
-}
-*nbOrdi = 0;
-printf("Parc entierement libéré. Mémoire nettoyée. \n");
+    if (parc == NULL)
+    {
+        printf("Parc deja vide , rien a liberer.\n");
+        return;
+    }
+    for (int i = 0; i < *nbOrdi; i++)
+    {
+        libererOrdinateur(&parc[i]);
+    }
+    *nbOrdi = 0;
+    printf("Parc entierement lib�r�. M�moire nettoy�e. \n");
 }
 
 // Fonction AjouterOrdinateur
-int ajouterOrdinateur(Ordinateur** parc, int* nbOrdi)
-//Etape 1 : Verfication
+int ajouterOrdinateur(P_ordinateur* parc, int* nbOrdi)
 {
-if (*nbOrdi >= MAX_ORDINATEURS) {
-printf("Erreur : Parc plein (max %d ordinateurs) !\n", MAX_ORDINATEURS);
-return 0;
-}
+    //Etape 1 : Verfication
+    if (*nbOrdi >= MAX_ORDINATEURS) {
+        printf("Erreur : Parc plein (max %d ordinateurs) !\n", MAX_ORDINATEURS);
+        return 0;
+    }
 
-//Etape 2 : Creation d'un ordi vide
-Ordinateur* nouvelOrdi = creerOrdinateur();
-if (nouvelOrdi == NULL){
-    return 0;
-}
+    //Etape 2 : Creation d'un ordi vide
+    P_ordinateur nouvelOrdi = creerOrdinateur();
+    if (nouvelOrdi == NULL){
+        return 0;
+    }
 
-printf("| AJOUT D'UN ORDINATEUR : |\n");
-//---Numero de carte ---
-printf("Numero de carte  du detenteur : ");
-scanf("%d", &nouvelOrdi->numeroCarte);
-viderBuffer();
-//---Specialite---
-printf("Specialite  du detenteur : ");
-fgets(nouvelOrdi->specialite, TAILLE_CHAINE, stdin);
-nouvelOrdi->specialite[strcspn(nouvelOrdi->specialite, "\n")] = '\0';
-//---Numero de serie---
-printf("Numero de serie : ");
-fgets(nouvelOrdi->numeroSerie, TAILLE_CHAINE, stdin);
-nouvelOrdi->numeroSerie[strcspn(nouvelOrdi->numeroSerie, "\n")] = '\0';
-//---Marque---
-printf("Marque : ");
-fgets(nouvelOrdi->marque, TAILLE_CHAINE, stdin);
-nouvelOrdi->marque[strcspn(nouvelOrdi->marque, "\n")] = '\0';
-//---Vitesse CPU---
-printf("Vitesse  du CPU (GHz) : ");
-scanf("%f", &nouvelOrdi->vitesseCPU);
-viderBuffer();
-//---RAM ---
-printf("RAM (Go) : ");
-scanf("%d", &nouvelOrdi->ram);
-viderBuffer();
-//--- Taille disque---
-printf("Taille disque (Go) : ");
-scanf("%d", &nouvelOrdi->tailleDisque);
-viderBuffer();
-//---Prix---
-printf("Prix estime (F CFA) : ");
-scanf("%d", &nouvelOrdi->prix);
-viderBuffer();
-//---stockage dans le parc---
-parc[*nbOrdi] = nouvelOrdi;
-//---incrementation du compteur---
-(*nbOrdi)++;
-printf("\n Ordinateur ajouté avec succes !\n");
-printf("  Total dans le parc : %d / %d\n", *nbOrdi, MAX_ORDINATEURS);
-return 1;
+    printf("| AJOUT D'UN ORDINATEUR : |\n");
+    //---Numero de carte ---
+    printf("Numero de carte  du detenteur : ");
+    scanf("%d", &nouvelOrdi->numeroCarte);
+    viderBuffer();
+    //---Specialite---
+    printf("Specialite  du detenteur : ");
+    fgets(nouvelOrdi->specialite, TAILLE_CHAINE, stdin);
+    nouvelOrdi->specialite[strcspn(nouvelOrdi->specialite, "\n")] = '\0';
+    //---Numero de serie---
+    printf("Numero de serie : ");
+    fgets(nouvelOrdi->numeroSerie, TAILLE_CHAINE, stdin);
+    nouvelOrdi->numeroSerie[strcspn(nouvelOrdi->numeroSerie, "\n")] = '\0';
+    //---Marque---
+    printf("Marque : ");
+    fgets(nouvelOrdi->marque, TAILLE_CHAINE, stdin);
+    nouvelOrdi->marque[strcspn(nouvelOrdi->marque, "\n")] = '\0';
+    //---Vitesse CPU---
+    printf("Vitesse  du CPU (GHz) : ");
+    scanf("%f", &nouvelOrdi->vitesseCPU);
+    viderBuffer();
+    //---RAM ---
+    printf("RAM (Go) : ");
+    scanf("%d", &nouvelOrdi->ram);
+    viderBuffer();
+    //--- Taille disque---
+    printf("Taille disque (Go) : ");
+    scanf("%d", &nouvelOrdi->tailleDisque);
+    viderBuffer();
+    //---Prix---
+    printf("Prix estime (F CFA) : ");
+    scanf("%d", &nouvelOrdi->prix);
+    viderBuffer();
+    //---stockage dans le parc---
+    parc[*nbOrdi] = nouvelOrdi;
+    //---incrementation du compteur---
+    (*nbOrdi)++;
+    printf("\n Ordinateur ajout� avec succes !\n");
+    printf("  Total dans le parc : %d / %d\n", *nbOrdi, MAX_ORDINATEURS);
+    return 1;
 
 }
 
 //Fonction listerOrdinateur
-void listerOrdinateurs(Ordinateur** parc, int nbOrdi)
+void listerOrdinateurs(P_ordinateur* parc, int nbOrdi)
 {
-if (nbOrdi == 0) {
-printf("Le parc est vide. Aucun ordinateur enregistre. \n");
-return;
-}
-printf("LISTE DES ORDINATEURS (%d)\n", nbOrdi);
-printf("%-5s %-15s %-15s %-10s %-8s %-6s %-8s %-10s\n",
-"N", "Carte", "Specialite", "Marque", "CPU", "RAM", "Disque", "Prix");
-printf("--------------------------------------------------------------------\n");
+    if (nbOrdi == 0) {
+        printf("Le parc est vide. Aucun ordinateur enregistre. \n");
+        return;
+    }
+    printf("LISTE DES ORDINATEURS (%d)\n", nbOrdi);
+    printf("%-5s | %-15s | %-15s | %-15s | %-12s | %-8s | %-6s | %-8s | %-10s\n",
+    "N", "Carte", "Specialite","Serie", "Marque", "CPU", "RAM", "Disque", "Prix");
+    printf("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
 
-for (int i = 0; i < nbOrdi; i++) {
-printf("%-5d", i + 1);
-afficherLigne(parc[i]);
-}
-printf("--------------------------------------------------------------------\n");
+    for (int i = 0; i < nbOrdi; i++) {
+        printf("%-5d |", i + 1);
+        afficherLigne(parc[i]);
+    }
+    printf("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
 
 }
 
 // Fonction Details
-void afficherDetails(Ordinateur** parc, int nbOrdi)
+void afficherDetails(P_ordinateur* parc, int nbOrdi)
 {
-if (nbOrdi == 0) {
-printf("Le parc est vide. Aucun ordinateur a afficher. \n");
-return;
+    if (nbOrdi == 0) {
+        printf("Le parc est vide. Aucun ordinateur a afficher. \n");
+        return;
+    }
+
+    char serie[TAILLE_CHAINE];
+    printf("Entrez le numero de serie a rechercher : ");
+    fgets(serie, TAILLE_CHAINE, stdin);
+    serie[strcspn(serie, "\n")] = '\0';
+
+    int index = rechercherParNumeroSerie(parc, nbOrdi, serie);
+    if (index == -1) {
+        printf("Ordinateur non trouve.\n");
+        return;
+    }
+
+
+    P_ordinateur o = parc[index];
+
+    printf("====DETAILS DE L'ORDINATEUR====\n");
+
+    printf("---INFORMATIONS DU DETENTEUR--- :\n");
+    printf("Numero de carte : %d\n", o->numeroCarte);
+    printf("Specialite : %s\n", o->specialite);
+
+    printf("\n ---CARACTERISTIQUES TECHNIQUES--- :\n");
+    printf("Numero de serie  : %s\n", o->numeroSerie);
+    printf("Marque           : %s\n", o->marque);
+    printf("Vitesse CPU      : %.2f GHz\n", o->vitesseCPU);
+    printf("RAM              : %d Go\n", o->ram);
+    printf("Taille disque    : %d Go\n", o->tailleDisque);
+
+    printf("\n Prix estime : %d F CFA\n", o->prix);
+    }
+
+    //Fonction supprimerOrdinateur
+    int supprimerOrdinateur(P_ordinateur* parc, int* nbOrdi)
+    {
+    if (*nbOrdi == 0) {
+        printf("\nLe parc est deja vide.RIEN  a supprimer. \n");
+       return 0;
+    }
+    char serie[TAILLE_CHAINE];
+    printf("Entrez le numero de serie de l'ordi a supprimer .\n ");
+    fgets(serie, TAILLE_CHAINE, stdin);
+    serie[strcspn(serie, "\n")] = '\0';
+
+
+    int index = rechercherParNumeroSerie(parc, *nbOrdi, serie);
+
+    if (index == -1) {
+        printf("Ordinateur non trouve avec ce numero de serie .\n");
+        return 0;
+    }
+    //confirmation
+    printf("\n Ordinateur trouve :\n");
+    printf(" Marque  : %s\n", parc[index]->marque);
+    printf(" Serie   : %s\n", parc[index]->numeroSerie);
+
+    char confirmation;
+    printf("\nConfirmer la suppression ? (o/n) : ");
+    scanf("%c", &confirmation);
+    viderBuffer();
+
+    if (confirmation != 'o' && confirmation != 'n'){
+
+        printf("Suppression annulee.\n");
+        return 0;
+    }
+
+
+    // 1. Libere la memoire de l'ordinateur supprime
+    libererOrdinateur(&parc[index]);
+
+    // 2. Decale les elements suivants vers la gauche
+    for (int i = index; i < *nbOrdi - 1; i++) {
+        parc[i] = parc[i + 1];
+    }
+    // 3. Decremente le compteur
+    (*nbOrdi)--;
+    printf("Ordinateur supprime avec succes !\n");
+    printf(" Restants dans le parc : %d / %d\n ", *nbOrdi, MAX_ORDINATEURS );
+
+    return 1;
+
+    }
+
+    // Fonction rechercher par numero de serie
+    int rechercherParNumeroSerie(P_ordinateur* parc, int nbOrdi, const char* serie)
+    {
+        for (int i = 0; i < nbOrdi; i++) {
+            if (strcmp(parc[i]->numeroSerie, serie) == 0) {
+                return i; // Retourne l'index trouve
+            }
+
+        }
+        return -1; // Non trouve
+    }
+
+    // Fonction repartirParSpecialite
+    void repartirParSpecialite(P_ordinateur* parc, int nbOrdi)
+    {
+        if (nbOrdi == 0) {
+            printf("Le parc est vide. Aucune repartition possible. \n");
+            return;
+       }
+    // allocation et initialisation avec calloc
+    int* dejaVu = (int*)calloc(nbOrdi, sizeof(int));
+    if (dejaVu == NULL) {
+        printf(" Erreur memoire. \n");
+        return;
+    }
+
+    printf("REPARTITION PAR SPECIALITE\n");
+    for (int i = 0; i < nbOrdi; i++) {
+        if (dejaVu[i]) continue;
+        printf("\n Specialite : %s\n", parc[i]->specialite);
+        printf(" Ordinateurs : ");
+        for (int j = i; j < nbOrdi; j++) {
+            if (strcmp(parc[i]->specialite, parc[j]->specialite) == 0) {
+                printf("[%s] ", parc[j]->numeroSerie);
+                dejaVu[j] = 1;
+            }
+        }
+            printf("\n");
+    }
+    free(dejaVu);
 }
 
-char serie[TAILLE_CHAINE];
-printf("Entrez le numero de serie a rechercher : ");
-fgets(serie, TAILLE_CHAINE, stdin);
-serie[strcspn(serie, "\n")] = '\0';
-
-int index = rechercherParNumeroSerie(parc, nbOrdi, serie);
-if (index == -1) {
-printf("Ordinateur non trouve.\n");
-return;
-}
-
-
-Ordinateur* o = parc[index];
-
-printf("====DETAILS DE L'ORDINATEUR====\n");
-
-printf("---INFORMATIONS DU DETENTEUR--- :\n");
-printf("Numero de carte : %d\n", o->numeroCarte);
-printf("Specialite : %s\n", o->specialite);
-
-printf("\n ---CARACTERISTIQUES TECHNIQUES--- :\n");
-printf("Numero de serie  : %s\n", o->numeroSerie);
-printf("Marque           : %s\n", o->marque);
-printf("Vitesse CPU      : %.2f GHz\n", o->vitesseCPU);
-printf("RAM              : %d Go\n", o->ram);
-printf("Taille disque    : %d Go\n", o->tailleDisque);
-
-printf("\n Prix estime : %d F CFA\n", o->prix);
-}
-
-//Fonction supprimerOrdinateur
-int supprimerOrdinateur(Ordinateur** parc, int* nbOrdi)
-{
-if (*nbOrdi == 0) {
-printf("\nLe parc est deja vide.RIEN  a supprimer. \n");
-return 0;
-}
-char serie[TAILLE_CHAINE];
-printf("Entrez le numero de serie de l'ordi a supprimer .\n ");
-fgets(serie, TAILLE_CHAINE, stdin);
-serie[strcspn(serie, "\n")] = '\0';
-
-
-int index = rechercherParNumeroSerie(parc, *nbOrdi, serie);
-
-if (index == -1) {
-printf("Ordinateur non trouve avec ce numero de serie .\n");
-return 0;
-}
-//confirmation
-printf("\n Ordinateur trouve :\n");
-printf(" Marque  : %s\n", parc[index]->marque);
-printf(" Serie   : %s\n", parc[index]->numeroSerie);
-
-char confirmation;
-printf("\nConfirmer la suppression ? (o/n) : ");
-scanf("%c", &confirmation);
-viderBuffer();
-
-if (confirmation != 'o' && confirmation != 'n'){
-
-    printf("Suppression annulee.\n");
-    return 0;
-}
-
-
-// 1. Libere la memoire de l'ordinateur supprime
-libererOrdinateur(&parc[index]);
-
-// 2. Decale les elements suivants vers la gauche
-for (int i = index; i < *nbOrdi - 1; i++) {
-parc[i] = parc[i + 1];
-}
-// 3. Decremente le compteur
-(*nbOrdi)--;
-printf("Ordinateur supprime avec succes !\n");
-printf(" Restants dans le parc : %d / %d\n ", *nbOrdi, MAX_ORDINATEURS );
-
-return 1;
-
-}
-
-// Fonction rechercher par numero de serie
-int rechercherParNumeroSerie(Ordinateur** parc, int nbOrdi, const char* serie)
-{
-for (int i = 0; i < nbOrdi; i++) {
-if (strcmp(parc[i]->numeroSerie, serie) == 0) {
-return i; // Retourne l'index trouve
-}
-}
-return -1; // Non trouve
-}
-
-// Fonction repartirParSpecialite
-void repartirParSpecialite(Ordinateur** parc, int nbOrdi)
-{
-if (nbOrdi == 0) {
-printf("Le parc est vide. Aucune repartition possible. \n");
-return;
-}
-// allocation et initialisation avec calloc
-int* dejaVu = (int*)calloc(nbOrdi, sizeof(int));
-if (dejaVu == NULL) {
-    printf(" Erreur memoire. \n");
-    return;
-}
-
-printf("REPARTITION PAR SPECIALITE\n");
-for (int i = 0; i < nbOrdi; i++) {
-if (dejaVu[i]) continue;
-printf("\n Specialite : %s\n", parc[i]->specialite);
-printf(" Ordinateurs : ");
-for (int j = i; j < nbOrdi; j++) {
-if (strcmp(parc[i]->specialite, parc[j]->specialite) == 0) {
-printf("[%s] ", parc[j]->numeroSerie);
-dejaVu[j] = 1;
-}
-}
-printf("\n");
-}
-free(dejaVu);
-}
 
 // Repartir par marque
-void repartirParMarque(Ordinateur** parc, int nbOrdi)
+void repartirParMarque(P_ordinateur* parc, int nbOrdi)
 {
-if (nbOrdi == 0) {
-printf("Le parc est vide. Aucune repartition possible. \n");
-return;
-}
+    if (nbOrdi == 0) {
+        printf("Le parc est vide. Aucune repartition possible. \n");
+        return;
+    }
 
-int* dejaVu = (int*)calloc(nbOrdi, sizeof(int));
-if (dejaVu == NULL){
-    printf("\n Erreur memoire lors de la repartition.\n");
-    return;
-}
+    int* dejaVu = (int*)calloc(nbOrdi, sizeof(int));
+    if (dejaVu == NULL){
+        printf("\n Erreur memoire lors de la repartition.\n");
+        return;
+    }
 
-printf("REPARTITION PAR MARQUE\n");
+    printf("REPARTITION PAR MARQUE\n");
 
-for (int i = 0; i < nbOrdi; i++) {
-if (dejaVu[i]) continue;
-printf("\n Marque : %s\n", parc[i]->marque);
-printf(" Ordinateurs : ");
+    for (int i = 0; i < nbOrdi; i++) {
+        if (dejaVu[i]) continue;
+        printf("\n Marque : %s\n", parc[i]->marque);
+        printf(" Ordinateurs : ");
 
-for (int j = i; j < nbOrdi; j++) {
-if (strcmp(parc[i]->marque, parc[j]->marque) == 0) {
-printf("[%s] ", parc[j]->numeroSerie);
-dejaVu[j] = 1;
-}
-}
-printf("\n");
-}
-free(dejaVu);
+        for (int j = i; j < nbOrdi; j++) {
+            if (strcmp(parc[i]->marque, parc[j]->marque) == 0) {
+               printf("[%s] ", parc[j]->numeroSerie);
+                dejaVu[j] = 1;
+            }
+        }
+        printf("\n");
+    }
+    free(dejaVu);
 }
 
 // Fonction repartirParRAM
-void repartirParRAM(Ordinateur** parc, int nbOrdi)
+void repartirParRAM(P_ordinateur* parc, int nbOrdi)
 {
-if (nbOrdi == 0) {
-printf("Le parc est vide. Aucune repartition possible.\n");
-return;
-}
+    if (nbOrdi == 0) {
+        printf("Le parc est vide. Aucune repartition possible.\n");
+        return;
+    }
 
 // Copie temporaire des pointeurs pour trier sans modifier l'original
-Ordinateur** temp = (Ordinateur**)malloc(nbOrdi * sizeof(Ordinateur*));
-if (temp == NULL){
-    printf("Ereur memoire lors de la repartition.\n");
-    return;
-}
+    P_ordinateur* temp = (P_ordinateur*)malloc(nbOrdi * sizeof(P_ordinateur));
+    if (temp == NULL){
+        printf("Ereur memoire lors de la repartition.\n");
+        return;
+    }
 
-for (int i = 0; i < nbOrdi; i++){
-    temp[i] = parc[i];
-}
-// Tri bulle par RAM
-for (int i = 0; i < nbOrdi - 1; i++) {
-for (int j = 0; j < nbOrdi - i - 1; j++) {
-if (temp[j]->ram > temp[j + 1]->ram) {
-Ordinateur* swap = temp[j];
-temp[j] = temp[j + 1];
-temp[j + 1] = swap;
-}
-}
-}
-printf("REPARTITION PAR RAM\n");
+    for (int i = 0; i < nbOrdi; i++){
+        temp[i] = parc[i];
+    }
+    // Tri bulle par RAM
+    for (int i = 0; i < nbOrdi - 1; i++) {
+        for (int j = 0; j < nbOrdi - i - 1; j++) {
+            if (temp[j]->ram > temp[j + 1]->ram) {
+                P_ordinateur swap = temp[j];
+                temp[j] = temp[j + 1];
+                temp[j + 1] = swap;
+            }
+        }
+    }
+    printf("REPARTITION PAR RAM\n");
 
-int ramActuelle = -1;
-for (int i = 0; i < nbOrdi; i++) {
-if (temp[i]->ram != ramActuelle) {
-ramActuelle = temp[i]->ram;
-printf("\n RAM : %d Go\n ", ramActuelle);
-printf("  Ordinateur :");
-}
-printf("[%s] ", temp[i]->numeroSerie);
-}
-printf("\n");
-free(temp); // Libere seulement le tableau de pointeurs
+    int ramActuelle = -1;
+    for (int i = 0; i < nbOrdi; i++) {
+        if (temp[i]->ram != ramActuelle) {
+            ramActuelle = temp[i]->ram;
+            printf("\n RAM : %d Go\n ", ramActuelle);
+            printf("  Ordinateur :");
+        }
+        printf("[%s] ", temp[i]->numeroSerie);
+    }
+    printf("\n");
+    free(temp); // Libere seulement le tableau de pointeurs
 }
 
 // Fonction classerParVitesseCPU
-void classerParVitesseCPU(Ordinateur** parc, int nbOrdi)
+void classerParVitesseCPU(P_ordinateur* parc, int nbOrdi)
 {
-if (nbOrdi <= 1) {
-printf("Pas assez d'ordinateurs pour trier (min 2).\n");
-return;
-}
+    if (nbOrdi <= 1) {
+        printf("Pas assez d'ordinateurs pour trier (min 2).\n");
+        return;
+    }
 
 // Tri a bulles sur le tableau de pointeurs
-for (int i = 0; i < nbOrdi - 1; i++) {
-for (int j = 0; j < nbOrdi - i - 1; j++) {
-if (parc[j]->vitesseCPU > parc[j + 1]->vitesseCPU) {
-// Echange les pointeurs (pas les structures !)
-Ordinateur* temp = parc[j];
-parc[j] = parc[j + 1];
-parc[j + 1] = temp;
-}
-}
-}
-printf("Parc trie par vitesse CPU (croissant).\n");
+    for (int i = 0; i < nbOrdi - 1; i++) {
+        for (int j = 0; j < nbOrdi - i - 1; j++) {
+            if (parc[j]->vitesseCPU > parc[j + 1]->vitesseCPU) {
+            // Echange les pointeurs (pas les structures !)
+                P_ordinateur temp = parc[j];
+                parc[j] = parc[j + 1];
+                parc[j + 1] = temp;
+            }
+        }
+        }
+    printf("Parc trie par vitesse CPU (croissant).\n");
 }
 
 // Fonction calculerValeurTotale
-long calculerValeurTotale(Ordinateur** parc, int nbOrdi)
+long calculerValeurTotale(P_ordinateur* parc, int nbOrdi)
 {
-long total = 0;
-for (int i = 0; i < nbOrdi; i++) {
-total += parc[i]->prix;
-}
-return total;
+    long total = 0;
+    for (int i = 0; i < nbOrdi; i++) {
+        total += parc[i]->prix;
+    }
+    return total;
 }
 
 // Fonction viderBuffer
 void viderBuffer(void)
 {
-int c;
-while ((c = getchar()) != '\n' && c != EOF);
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
 }
 
 // Fonction afficherLigne
-void afficherLigne(Ordinateur* ordi)
+void afficherLigne(P_ordinateur ordi)
 {
-printf("%d | %s | %s | %s | %.1fGHz | %dGo | %dGo | %d FCFA\n",
+    printf("%-5d | %-15s | %-15s | %-12s | %-6.1fGHz | %-4dGo | %-6dGo | %-10d FCFA\n",
 ordi->numeroCarte,
 ordi->specialite,
 ordi->numeroSerie,
