@@ -42,8 +42,8 @@
 #define TAILLE_CHAINE 100
 
 // STRUCTURE ORDINATEUR
-
-typedef struct {
+typedef struct Ordinateur *P_ordinateur;
+struct Ordinateur {
     int numeroCarte;
     char specialite[TAILLE_CHAINE];
     char numeroSerie[TAILLE_CHAINE];
@@ -52,7 +52,7 @@ typedef struct {
     int ram;
     int tailleDisque;
     int prix;
-} Ordinateur;
+};
 
 // Prototypes des fonctions
 
@@ -60,30 +60,30 @@ typedef struct {
 void afficherMenu(void);
 
 // Fonctions d'allocation memoire
-Ordinateur* creerOrdinateur(void);
-void libererOrdinateur(Ordinateur** ordi);
-void libererParc(Ordinateur** parc, int* nbOrdi);
+P_ordinateur creerOrdinateur(void);
+void libererOrdinateur(P_ordinateur*ordi);
+void libererParc(P_ordinateur* parc, int* nbOrdi);
 
 // Fonctions CRUD
-int ajouterOrdinateur(Ordinateur** parc, int* nbOrdi);
-void listerOrdinateurs(Ordinateur** parc, int nbOrdi);
-void afficherDetails(Ordinateur** parc, int nbOrdi);
-int supprimerOrdinateur(Ordinateur** parc, int* nbOrdi);
+int ajouterOrdinateur(P_ordinateur* parc, int* nbOrdi);
+void listerOrdinateurs(P_ordinateur* parc, int nbOrdi);
+void afficherDetails(P_ordinateur* parc, int nbOrdi);
+int supprimerOrdinateur(P_ordinateur* parc, int* nbOrdi);
 
 // Fonction de recherches
-int rechercherParNumeroSerie(Ordinateur** parc, int nbOrdi, const char* serie);
+int rechercherParNumeroSerie(P_ordinateur* parc, int nbOrdi, const char* serie);
 
 // Fonction de repartition
-void repartirParSpecialite(Ordinateur** parc, int nbOrdi);
-void repartirParMarque(Ordinateur** parc, int nbOrdi);
-void repartirParRAM(Ordinateur** parc, int nbOrdi);
+void repartirParSpecialite(P_ordinateur* parc, int nbOrdi);
+void repartirParMarque(P_ordinateur* parc, int nbOrdi);
+void repartirParRAM(P_ordinateur * parc, int nbOrdi);
 
 // Fonction de tris et de calcul
-void classerParVitesseCPU(Ordinateur** parc, int nbOrdi);
-long calculerValeurTotale(Ordinateur** parc, int nbOrdi);
+void classerParVitesseCPU(P_ordinateur* parc, int nbOrdi);
+long calculerValeurTotale(P_ordinateur* parc, int nbOrdi);
 
 // Utilitaires
 void viderBuffer(void);
-void afficherLigne(Ordinateur* ordi);
+void afficherLigne(P_ordinateur ordi);
 
 #endif
