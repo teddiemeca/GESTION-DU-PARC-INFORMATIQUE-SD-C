@@ -17,7 +17,7 @@
  *                      AGNAVE Mawusse Jason IABD\n
  *                      ATCHIKITI Djidjome Pierrette IABD\n
  *                      BARBOZA Abdoul-Raouf GC\n
- *                      CHILIE Tienpabe Eddie GM\n
+ *                      CHILI Tienpabe Eddie GM\n
  *                      HONKU Komi Godwin IABD\n
  *                      PASSAH Kwami David GC\n
  *                      SEGBEDZI Komi Charles GC\n
@@ -99,7 +99,7 @@ for (int i = 0; i < *nbOrdi; i++) {
 libererOrdinateur(&parc[i]);
 }
 *nbOrdi = 0;
-printf("Parc entierement libéré. Mémoire nettoyée. \n");
+printf("Parc entierement libÃ©rÃ©. MÃ©moire nettoyÃ©e. \n");
 }
 
 // Fonction AjouterOrdinateur
@@ -154,7 +154,7 @@ viderBuffer();
 parc[*nbOrdi] = nouvelOrdi;
 //---incrementation du compteur---
 (*nbOrdi)++;
-printf("\n Ordinateur ajouté avec succes !\n");
+printf("\n Ordinateur ajoutÃ© avec succes !\n");
 printf("  Total dans le parc : %d / %d\n", *nbOrdi, MAX_ORDINATEURS);
 return 1;
 
