@@ -17,7 +17,7 @@
  *                      AGNAVE Mawusse Jason IABD\n
  *                      ATCHIKITI Djidjome Pierrette IABD\n
  *                      BARBOZA Abdoul-Raouf GC\n
- *                      CHILIE Tienpabe Eddie GM\n
+ *                      CHILI Tienpabe Eddie GM\n
  *                      HONKU Komi Godwin IABD\n
  *                      PASSAH Kwami David GC\n
  *                      SEGBEDZI Komi Charles GC\n
